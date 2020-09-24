@@ -1,0 +1,26 @@
+---
+{{- range $name, $value := .Values.projects}}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ $name }}
+  namespace: argo
+spec:
+  description: {{ $value.description }}
+  sourceRepos:
+    {{- range $source :=  $value.sources }}
+    - {{ $source }}
+    {{- end }}
+  destinations:
+  {{- range $destname, $destvalue := $value.destinations }}
+    - namespace:   {{ $destvalue.namespace }}
+      server:  {{ $destvalue.server }}
+  {{- end }}
+  orphanedResources:
+     ignore:
+      {{- range $ignored :=  $value.ignored }}
+      - kind: {{ $ignored }}
+      {{- end }}
+     warn: {{ $value.warnignored | default true }}
+---
+  {{- end }}

@@ -1,0 +1,9 @@
+apiVersion: v2
+name: argoApps
+description: A Helm char for apps of apps in Argo
+home: https://github.com/KvalitetsIT/helm-argo-app-chart
+
+
+
+appVersion: 1.0
+version: 1.0

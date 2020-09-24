@@ -1,0 +1,31 @@
+---
+{{ $server := .Values.server}}
+{{ $repoUrl := .Values.repoUrl}}
+{{ $namespace := .Values.namespace}}
+{{ $project := .Values.project}}
+{{- range $name, $value := .Values.applications}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $name}}
+  namespace: argo
+spec:
+  destination:
+    namespace: {{ $namespace}}
+    server: {{ $server }}
+  project: {{ $project}}
+  source:
+    helm:
+      valueFiles:
+      {{- range $file :=  $value.valueFiles }}
+      - {{ $file }}
+      {{- end }}
+    path: {{ $value.path }}
+    repoURL: {{ $repoUrl }}
+    targetRevision: {{ $value.targetRevision }}
+  {{- if $value.sync}}
+  syncPolicy:
+    automated: {}
+  {{- end}}
+---
+{{- end }}
