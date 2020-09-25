@@ -11,15 +11,17 @@ metadata:
   namespace: {{ $namespace }}
 spec:
   destination:
-    namespace: {{ $namespace}}
+    namespace: {{ $value.namespace | default $namespace}}
     server: {{ $server }}
   project: {{ $project}}
   source:
+    {{- if $value.valueFiles }}
     helm:
       valueFiles:
       {{- range $file :=  $value.valueFiles }}
       - {{ $file }}
       {{- end }}
+    {{- end}}
     path: {{ $value.path }}
     repoURL: {{ $repoUrl }}
     targetRevision: {{ $value.targetRevision }}
