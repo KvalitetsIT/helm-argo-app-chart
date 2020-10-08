@@ -8,7 +8,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{ $name}}
-  namespace: {{ $namespace }}
+  namespace: argo
 spec:
   destination:
     namespace: {{ $value.namespace | default $namespace}}
