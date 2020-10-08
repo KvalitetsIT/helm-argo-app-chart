@@ -1,10 +1,11 @@
 ---
+{{ $namespace := .Values.namespace}}
 {{- range $name, $value := .Values.projects}}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: {{ $name }}
-  namespace: argo
+  namespace: {{ $namespace }}
 spec:
   description: {{ $value.description }}
   sourceRepos:
