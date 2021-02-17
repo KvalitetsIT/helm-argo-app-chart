@@ -25,9 +25,13 @@ spec:
     path: {{ $value.path }}
     repoURL: {{ $repoUrl }}
     targetRevision: {{ $value.targetRevision }}
-  {{- if $value.sync}}
   syncPolicy:
+  {{- if $value.sync}}
     automated: {}
+  {{- end}}
+  {{- if $value.createNamespace }}
+    syncOptions:
+      - CreateNamespace=true
   {{- end}}
 ---
 {{- end }}
