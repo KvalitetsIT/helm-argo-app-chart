@@ -33,5 +33,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
   {{- end}}
+  ignoreDifferences:
+  {{toYaml $value.ignoreDifferences | nindent 4}}
 ---
 {{- end }}
