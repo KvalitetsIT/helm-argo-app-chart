@@ -3,12 +3,13 @@
 {{ $repoUrl := .Values.repoUrl}}
 {{ $namespace := .Values.namespace}}
 {{ $project := .Values.project}}
+{{ $namespaceArgo := .Values.namespaceArgo}}
 {{- range $name, $value := .Values.applications}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{ $name}}
-  namespace: {{ $namespace }}
+  namespace: {{ $namespaceArgo | default "argo"}}
 spec:
   destination:
     namespace: {{ $value.namespace | default $namespace}}
