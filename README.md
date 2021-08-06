@@ -36,32 +36,32 @@ Theese properties are both used in projects and applications - And should always
 
 ### Argo projects
 
-| Value                                 | Description                         | Valuetype                   |
-| -----                                 | -----------                         | -----------                 |
-| `projects`                            | List of projects                    | `<list<obj>>`               |
-| `projects[].description`              | description of project              | `<string>`                  |
-| `projects[].sources`                  | Sourcerepositories                  | `<list<string>>`            |
-| `projects[].destinations`             | List of allowed destinationts       | `<string>`                  |
-| `projects[].destinations[].namespace` | namespace of allowed dest           | `<string>`                  |
-| `projects[].destinations[].server`    | server of allowed dest              | `<string>`                  |
-| `projects[].ignored`                  | kinds of Ignored orphanedressources | `<list<string>>`            |
-| `warnignored`                         |                                     | `<bool>`                    |
+| Value                                 | Description                                                             | Valuetype                         |
+| -----                                 | -----------                                                             | -----------                       |
+| `projects`                            | List of projects                                                        | `<list<obj>>`                     |
+| `projects[].description`              | description of project                                                  | `<string>`                        |
+| `projects[].sources`                  | Sourcerepositories                                                      | `<list<string>>`                  |
+| `projects[].destinations`             | List of allowed destinationts                                           | `<string>`                        |
+| `projects[].destinations[].namespace` | namespace of allowed dest                                               | `<string>`                        |
+| `projects[].destinations[].server`    | server of allowed dest                                                  | `<string>`                        |
+| `projects[].ignored`                  | kinds of orphanedressources to ignore                                   | `<list<string>>`                  |
+| `warnignored`                         | If `true` a warning will be displayed if orphanedressources exists      | `<bool>` (default: `true`)                          |
 
 ### Argo applications
 
-| Value                                 | Description                                         | Valuetype         |  
-| -----                                 | -----------                                         | -----------       |
-| `repoUrl`                             | Gitrepo the application should be created from      | `<git-repo-url>`  |
-| `namespace`                           | Default namespace for destination                   | `<string>`        |
-| `project`                             | What project should this app be created on          | `<string>`        |
-| `applications`                        | List containing applications to create              | `<list<obj>>`     |
-| `applications[].namespace`            | Namespace for destination                           | `<string>`        |
-| `applications[].valueFiles`           | List with values-files to use for application       | `<string>`        |
-| `applications[].path`                 | path from root to application-folder                | `<string>`        |
-| `applications[].targetRevision`       | What branch should be used                          | `<string>`        |
-| `applications[].sync`                 |                                                     | `<string>`        |
-| `applications[].createNamespace`      | Auto create namesapce                               | `<bool>`          |
-| `applications[].ignoreDifferences`    |                                                     | `<?>`             |
+| Value                                 | Description                                                             | Valuetype         |  
+| -----                                 | -----------                                                             | -----------       |
+| `repoUrl`                             | Gitrepo the application should be created from                          | `<git-repo-url>`  |
+| `namespace`                           | Default namespace for destination                                       | `<string>`        |
+| `project`                             | What project should this app be created on                              | `<string>`        |
+| `applications`                        | List containing applications to create                                  | `<list<obj>>`     |
+| `applications[].namespace`            | Namespace for destination                                               | `<string>`        |
+| `applications[].valueFiles`           | List with values-files to use for application                           | `<string>`        |
+| `applications[].path`                 | path from root to application-folder                                    | `<string>`        |
+| `applications[].targetRevision`       | What branch should be used                                              | `<string>`        |
+| `applications[].sync`                 | If `true` an `automated` syncPolicy is added - Argo will sync automatically | `<bool>`        |
+| `applications[].createNamespace`      | Auto create namesapce                                                   | `<bool>`          |
+| `applications[].ignoreDifferences`    | [Ignore some differences](https://argoproj.github.io/argo-cd/user-guide/diffing/) | `<list<obj>>`             |
 
 
 
@@ -104,9 +104,15 @@ applications:
   kithosting-infrastructure-applications: #name of application
     path: deployment/apps/infrastructure
     targetRevision: master
+    sync: false
     valueFiles:
       - values.yaml
       - values-test.yaml
     namespace: infrastructure
+    ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+      - /spec/replicas
 
 ```
