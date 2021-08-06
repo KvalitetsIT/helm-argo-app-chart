@@ -1,3 +1,28 @@
+## Argocd helm chart
+### Add helm-repository
+```console
+helm repo add KvalitetsIT https://raw.githubusercontent.com/KvalitetsIT/helm-repo/master/
+helm repo update
+```
+
+### Installing the Chart
+
+To install the chart with the release name `my-release`:
+
+```console
+helm install my-release kvalitetsit/argoapps
+```
+
+### Uninstalling the Chart
+
+To uninstall/delete the my-release deployment:
+
+```console
+helm delete my-release
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+
 ## Configuration
 To illustrate properties inside objects in lists, an `[]` is added to show that all elements in the list has following property. For example `projects[].description` here we have a list `projects`, and for each element in the list, there is a `description` property.
 
