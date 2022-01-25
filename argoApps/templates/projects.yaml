@@ -23,24 +23,24 @@ spec:
   {{- if ($value.clusterResourceWhitelist) }}
   clusterResourceWhitelist:
   {{- range $name, $value := $value.clusterResourceWhitelist }}
-    - group: {{ $value.group }}
-      kind: {{ $value.kind }}
+    - group: {{ $value.group | quote}}
+      kind: {{ $value.kind | quote}}
   {{- end }}
   {{- end }}
 
   {{- if ($value.namespaceResourceBlacklist) }}
   namespaceResourceBlacklist:
   {{- range $name, $value := $value.namespaceResourceBlacklist }}
-    - group: {{ $value.group }}
-      kind: {{ $value.kind }}
+    - group: {{ $value.group | quote}}
+      kind: {{ $value.kind | quote}}
   {{- end }}
   {{- end }}
 
   {{- if ($value.namespaceResourceWhitelist) }}
   namespaceResourceWhitelist:
   {{- range $name, $value := $value.namespaceResourceWhitelist }}
-    - group: {{ $value.group }}
-      kind: {{ $value.kind }}
+    - group: {{ $value.group | quote}}
+      kind: {{ $value.kind | quote}}
   {{- end }}
   {{- end }}
 
