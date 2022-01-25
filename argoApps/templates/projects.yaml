@@ -19,6 +19,31 @@ spec:
     - namespace:   {{ $destvalue.namespace }}
       server:  {{ $destvalue.server }}
   {{- end }}
+
+  {{- if ($value.clusterResourceWhitelist) }}
+  clusterResourceWhitelist:
+  {{- range $name, $value := $value.clusterResourceWhitelist }}
+    - group: {{ $value.group }}
+      kind: {{ $value.kind }}
+  {{- end }}
+  {{- end }}
+
+  {{- if ($value.namespaceResourceBlacklist) }}
+  namespaceResourceBlacklist:
+  {{- range $name, $value := $value.namespaceResourceBlacklist }}
+    - group: {{ $value.group }}
+      kind: {{ $value.kind }}
+  {{- end }}
+  {{- end }}
+
+  {{- if ($value.namespaceResourceWhitelist) }}
+  namespaceResourceWhitelist:
+  {{- range $name, $value := $value.namespaceResourceWhitelist }}
+    - group: {{ $value.group }}
+      kind: {{ $value.kind }}
+  {{- end }}
+  {{- end }}
+
   orphanedResources:
      ignore:
       {{- range $ignored :=  $value.ignored }}

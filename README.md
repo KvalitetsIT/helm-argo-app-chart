@@ -36,16 +36,25 @@ Theese properties are both used in projects and applications - And should always
 
 ### Argo projects
 
-| Value                                 | Description                                                             | Valuetype                         |
-| -----                                 | -----------                                                             | -----------                       |
-| `projects`                            | List of projects                                                        | `<list<obj>>`                     |
-| `projects[].description`              | description of project                                                  | `<string>`                        |
-| `projects[].sources`                  | Sourcerepositories                                                      | `<list<string>>`                  |
-| `projects[].destinations`             | List of allowed destinationts                                           | `<string>`                        |
-| `projects[].destinations[].namespace` | namespace of allowed dest                                               | `<string>`                        |
-| `projects[].destinations[].server`    | server of allowed dest                                                  | `<string>`                        |
-| `projects[].ignored`                  | kinds of orphanedressources to ignore                                   | `<list<string>>`                  |
-| `warnignored`                         | If `true` a warning will be displayed if orphanedressources exists      | `<bool>` (default: `true`)                          |
+| Value                                        | Description                   | Valuetype                      |
+|----------------------------------------------|-------------------------------| -----------                       |
+| `projects`                                   | List of projects              | `<list<obj>>`                  |
+| `projects[].description`                     | description of project        | `<string>`                     |
+| `projects[].sources`                         | Sourcerepositories            | `<list<string>>`               |
+| `projects[].destinations`                    | List of allowed destinationts | `<string>`                     |
+| `projects[].destinations[].namespace`        | namespace of allowed dest     | `<string>`                     |
+| `projects[].destinations[].server`           | server of allowed dest        | `<string>`                     |
+| `projects[].clusterResourceWhitelist`        | cluster resource whitelist    | `<list<string>>`               |
+| `projects[].clusterResourceWhitelist[].group`| K8S API group                 | `<string>`                  |
+| `projects[].clusterResourceWhitelist[].kind` | K8S API kind                  | `<string>`                |
+| `projects[].namespaceResourceBlacklist`        | namespace resource blacklist  | `<list<string>>`               |
+| `projects[].namespaceResourceBlacklist[].group`| K8S API group                 | `<string>`                  |
+| `projects[].namespaceResourceBlacklist[].kind` | K8S API kind                  | `<string>`                |
+| `projects[].namespaceResourceWhitelist`        | namespace resource whitelist  | `<list<string>>`               |
+| `projects[].namespaceResourceWhitelist[].group`| K8S API group                 | `<string>`                  |
+| `projects[].namespaceResourceWhitelist[].kind` | K8S API kind                  | `<string>`                |
+| `projects[].ignored`                         | kinds of orphanedressources to ignore                              | `<list<string>>`               |
+| `warnignored`                                | If `true` a warning will be displayed if orphanedressources exists | `<bool>` (default: `true`)                       |
 
 ### Argo applications
 
@@ -87,6 +96,12 @@ projects:
         server: https://kubernetes.default.svc
       - namespace: test-kunde
         server: https://kubernetes.default.svc
+    clusterResourceWhitelist:
+      - group: "*"
+        kind: "*"
+    namespaceResourceWhitelist:
+      - group: "*"
+        kind: "*"
 
     ignored:
       - Secret
