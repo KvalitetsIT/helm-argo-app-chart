@@ -44,11 +44,14 @@ spec:
   {{- end }}
   {{- end }}
 
+  {{- if and ($value.orphanedResources) $value.orphanedResources.disable }}
+  {{- else }}
   orphanedResources:
      ignore:
       {{- range $ignored :=  $value.ignored }}
       - kind: {{ $ignored }}
       {{- end }}
      warn: {{ $value.warnignored | default true }}
+  {{- end }}
 ---
   {{- end }}
