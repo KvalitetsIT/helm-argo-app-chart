@@ -16,6 +16,11 @@ spec:
     server: {{ $server }}
   project: {{ $project}}
   source:
+    {{- if not $value.valueFiles }}
+    directory:
+      recurse: true
+      jsonnet: {}
+    {{- end }}
     {{- if $value.valueFiles }}
     helm:
       valueFiles:
