@@ -14,7 +14,7 @@ spec:
   destination:
     namespace: {{ $value.namespace | default $namespace}}
     server: {{ $server }}
-  project: {{ $project}}
+  project: {{ $value.project | default $project}}
   source:
     {{- if not $value.valueFiles }}
     directory:
