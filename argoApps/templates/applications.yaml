@@ -10,6 +10,10 @@ kind: Application
 metadata:
   name: {{ $name}}
   namespace: {{ $namespaceArgo | default "argo"}}
+  annotations: 
+    {{- with $value.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   destination:
     namespace: {{ $value.namespace | default $namespace}}
