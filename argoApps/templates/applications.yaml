@@ -37,10 +37,10 @@ spec:
     targetRevision: {{ $value.targetRevision }}
   {{- if or ($value.sync) ($value.createNamespace)}}
   syncPolicy:
-  {{- if $value.sync.auto}}
+  {{- if ($value.sync.auto)}}
     automated: 
-      prune: {{ $value.sync.auto.prune | default true}}
-      selfHeal: {{ $value.sync.auto.selfHeal | default true}}
+      prune: {{ $value.sync.prune | default true}}
+      selfHeal: {{ $value.sync.selfHeal | default true}}
   {{- end}}
   {{- if $value.createNamespace }}
     syncOptions:
