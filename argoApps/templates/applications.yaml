@@ -38,7 +38,8 @@ spec:
   {{- if or ($value.sync) ($value.createNamespace)}}
   syncPolicy:
   {{- if $value.sync}}
-    automated: {}
+    automated: 
+      prune: true
   {{- end}}
   {{- if $value.createNamespace }}
     syncOptions:
