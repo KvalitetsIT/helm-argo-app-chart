@@ -42,9 +42,14 @@ spec:
       prune: {{ $value.sync.prune | default true}}
       selfHeal: {{ $value.sync.selfHeal | default true}}
   {{- end}}
-  {{- if $value.createNamespace }}
+  {{- if or ($value.createNamespace) ($value.serverSideApply) }}
     syncOptions:
+  {{- end }}
+  {{- if $value.createNamespace }}
       - CreateNamespace=true
+  {{- end}}
+  {{- if $value.serverSideApply }}
+      - ServerSideApply=true
   {{- end}}
   {{- end}}
   {{- if ($value.ignoreDifferences)}}
