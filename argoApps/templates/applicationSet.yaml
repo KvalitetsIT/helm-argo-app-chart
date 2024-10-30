@@ -1,0 +1,68 @@
+---
+{{ $server := .Values.server}}
+{{ $repoUrl := .Values.repoUrl}}
+{{ $namespace := .Values.namespace}}
+{{ $project := .Values.project}}
+{{ $namespaceArgo := .Values.namespaceArgo}}
+{{- range $name, $value := .Values.applicationSet}}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ $name}}
+  namespace: {{ $namespaceArgo | default "argo"}}
+  annotations: 
+    {{- with $value.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - clusters: {} # Automatically use all clusters defined within Argo CD
+  template:
+    metadata:
+      name: '{{.name}}-{{ $name }}'
+    spec:
+      project: {{ $value.project | default $project}}
+      source:
+        repoURL: {{ $repoUrl }}
+        targetRevision: {{ $value.targetRevision }}
+        path: {{ $value.path }}
+        {{- if not $value.valueFiles }}
+        directory:
+          recurse: true
+          jsonnet: {}
+        {{- end }}
+        {{- if $value.valueFiles }}
+        helm:
+          valueFiles:
+          {{- range $file :=  $value.valueFiles }}
+          - {{ $file }}
+          {{- end }}
+        {{- end}}
+      destination:
+        server: '{{.server}}'
+        namespace: {{ $value.namespace | default $namespace}}
+      {{- if or ($value.sync) ($value.createNamespace)}}
+      syncPolicy:
+      {{- if ($value.sync.auto)}}
+        automated: 
+          prune: {{ $value.sync.prune | default true}}
+          selfHeal: {{ $value.sync.selfHeal | default true}}
+      {{- end}}
+      {{- if or ($value.createNamespace) ($value.serverSideApply) }}
+        syncOptions:
+      {{- end }}
+      {{- if $value.createNamespace }}
+          - CreateNamespace=true
+      {{- end}}
+      {{- if $value.serverSideApply }}
+          - ServerSideApply=true
+      {{- end}}
+      {{- end}}
+      {{- if ($value.ignoreDifferences)}}
+      ignoreDifferences:
+      {{- toYaml $value.ignoreDifferences | nindent 4}}
+      {{- end}}
+---
+{{- end }}
