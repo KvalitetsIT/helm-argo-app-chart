@@ -21,7 +21,7 @@ spec:
   - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
     metadata:
-      name: '{{.name}}-{{ $name }}'
+      name: '{{`{{`}}.name{{`}}`}} -{{ $name }}'
     spec:
       project: {{ $value.project | default $project}}
       source:
@@ -41,7 +41,7 @@ spec:
           {{- end }}
         {{- end}}
       destination:
-        server: '{{.server}}'
+        server: '{{`{{`}}.server{{`}}`}} '
         namespace: {{ $value.namespace | default $namespace}}
       {{- if or ($value.sync) ($value.createNamespace)}}
       syncPolicy:
