@@ -44,6 +44,7 @@ Theese properties are both used in projects and applications - And should always
 | `projects[].destinations`                       | List of allowed destinationts                                      | `<string>`                  |
 | `projects[].destinations[].namespace`           | namespace of allowed dest                                          | `<string>`                  |
 | `projects[].destinations[].server`              | server of allowed dest                                             | `<string>`                  |
+| `projects[].destinations[].name  `              | name of allowed dest                                               | `<string>`                  |
 | `projects[].clusterResourceWhitelist`           | cluster resource whitelist                                         | `<list<string>>`            |
 | `projects[].clusterResourceWhitelist[].group`   | K8S API group                                                      | `<string>`                  |
 | `projects[].clusterResourceWhitelist[].kind`    | K8S API kind                                                       | `<string>`                  |

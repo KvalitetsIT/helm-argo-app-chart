@@ -17,7 +17,12 @@ spec:
   destinations:
   {{- range $destname, $destvalue := $value.destinations }}
     - namespace:   {{ $destvalue.namespace }}
+      {{- if ($$destvalue.server) }}
       server:  {{ $destvalue.server }}
+      {{- end }}
+      {{- if ($$destvalue.name) }}
+      name: {{ $destvalue.name }}
+      {{- end }}
   {{- end }}
 
   {{- if ($value.clusterResourceWhitelist) }}
