@@ -17,10 +17,10 @@ spec:
   destinations:
   {{- range $destname, $destvalue := $value.destinations }}
     - namespace:   {{ $destvalue.namespace }}
-      {{- if ($$destvalue.server) }}
+      {{- if ($destvalue.server) }}
       server:  {{ $destvalue.server }}
       {{- end }}
-      {{- if ($$destvalue.name) }}
+      {{- if ($destvalue.name) }}
       name: {{ $destvalue.name }}
       {{- end }}
   {{- end }}
