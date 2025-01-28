@@ -17,7 +17,12 @@ metadata:
 spec:
   destination:
     namespace: {{ $value.namespace | default $namespace}}
-    server: {{ $value.server | default $server }}
+    {{- if not ($value.destName) }}
+    server:  {{ $value.server | default $server }}
+    {{- end }}
+    {{- if ($value.destName) }}
+    name: {{ $value.destName }}
+    {{- end }}
   project: {{ $value.project | default $project}}
   source:
     {{- if not $value.valueFiles }}
