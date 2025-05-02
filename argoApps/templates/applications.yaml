@@ -38,7 +38,7 @@ spec:
       {{- end }}
     {{- end}}
     path: {{ $value.path }}
-    repoURL: {{ $repoUrl }}
+    repoURL: {{ $value.repoUrl | default $repoUrl }}
     targetRevision: {{ $value.targetRevision }}
   {{- if or ($value.sync) ($value.createNamespace)}}
   syncPolicy:
