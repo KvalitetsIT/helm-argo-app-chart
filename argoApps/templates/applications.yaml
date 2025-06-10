@@ -3,13 +3,14 @@
 {{ $repoUrl := .Values.repoUrl}}
 {{ $namespace := .Values.namespace}}
 {{ $project := .Values.project}}
-{{ $namespaceArgo := .Values.namespaceArgo}}
+{{ $namespaceArgo := .Values.namespaceArgo | default "argocd" }}
+{{ $appsInArgoNamespace := .Values.appsInArgoNamespace }}
 {{- range $name, $value := .Values.applications}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ $name}}
-  namespace: {{ $namespaceArgo | default "argo"}}
+  name: {{ $value.name | default $name  }}
+  namespace: {{ if $appsInArgoNamespace }}{{ $namespaceArgo }}{{ else }}{{ $value.namespace | default $namespace }}{{ end }}
   annotations: 
     {{- with $value.annotations }}
     {{- toYaml . | nindent 4 }}
