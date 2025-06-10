@@ -1,5 +1,6 @@
 ---
 {{ $namespaceArgo := .Values.namespaceArgo}}
+{{ $appsInArgoNamespace := .Values.appsInArgoNamespace }}
 
 {{- range $name, $value := .Values.projects}}
 
@@ -14,6 +15,15 @@ spec:
     {{- range $source :=  $value.sources }}
     - {{ $source }}
     {{- end }}
+
+  {{- if not $appsInArgoNamespace }}
+  # Allow Applications from the tenants namespace, default to the same as destinations
+  sourceNamespaces:
+  {{- range $destname, $destvalue := $value.destinations }}
+  - {{ $destvalue.namespace }}
+  {{- end }}
+  {{- end }}
+
   destinations:
   {{- range $destname, $destvalue := $value.destinations }}
     - namespace:   {{ $destvalue.namespace }}
