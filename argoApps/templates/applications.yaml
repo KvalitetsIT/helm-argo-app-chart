@@ -1,29 +1,29 @@
+{{ $server := .Values.server }}
+{{ $repoUrl := .Values.repoUrl }}
+{{ $namespace := .Values.namespace }}
+{{ $project := .Values.project }}
+{{ $namespaceArgo := .Values.namespaceArgo }}
+{{- range $name, $value := .Values.applications }}
 ---
-{{ $server := .Values.server}}
-{{ $repoUrl := .Values.repoUrl}}
-{{ $namespace := .Values.namespace}}
-{{ $project := .Values.project}}
-{{ $namespaceArgo := .Values.namespaceArgo}}
-{{- range $name, $value := .Values.applications}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ $name}}
-  namespace: {{ $namespaceArgo | default "argo"}}
-  annotations: 
+  name: {{ $name }}
+  namespace: {{ $namespaceArgo | default "argo" }}
+  annotations:
     {{- with $value.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   destination:
-    namespace: {{ $value.namespace | default $namespace}}
+    namespace: {{ $value.namespace | default $namespace }}
     {{- if not ($value.destName) }}
-    server:  {{ $value.server | default $server }}
+    server: {{ $value.server | default $server }}
     {{- end }}
-    {{- if ($value.destName) }}
+    {{- if $value.destName }}
     name: {{ $value.destName }}
     {{- end }}
-  project: {{ $value.project | default $project}}
+  project: {{ $value.project | default $project }}
   source:
     {{- if not $value.valueFiles }}
     directory:
@@ -33,34 +33,27 @@ spec:
     {{- if $value.valueFiles }}
     helm:
       valueFiles:
-      {{- range $file :=  $value.valueFiles }}
-      - {{ $file }}
-      {{- end }}
-    {{- end}}
+        {{- range $file := $value.valueFiles }}
+        - {{ $file }}
+        {{- end }}
+    {{- end }}
     path: {{ $value.path }}
     repoURL: {{ $value.repoUrl | default $repoUrl }}
     targetRevision: {{ $value.targetRevision }}
-  {{- if or ($value.sync) ($value.createNamespace)}}
+  {{- if or ($value.sync) ($value.createNamespace) }}
   syncPolicy:
-  {{- if ($value.sync.auto)}}
-    automated: 
-      prune: {{ $value.sync.prune | default true}}
-      selfHeal: {{ $value.sync.selfHeal | default true}}
-  {{- end}}
-  {{- if or ($value.createNamespace) ($value.serverSideApply) }}
+    {{- if ($value.sync.auto) }}
+    automated:
+      prune: {{ $value.sync.prune | default true }}
+      selfHeal: {{ $value.sync.selfHeal | default true }}
+    {{- end }}
     syncOptions:
-      - FailOnSharedResource={{ $value.failOnSharedResource | default true}}
+      - FailOnSharedResource={{ $value.failOnSharedResource | default true }}
+      - CreateNamespace={{ $value.createNamespace | default false }}
+      - ServerSideApply={{ $value.serverSideApply | default false }}
   {{- end }}
-  {{- if $value.createNamespace }}
-      - CreateNamespace=true
-  {{- end}}
-  {{- if $value.serverSideApply }}
-      - ServerSideApply=true
-  {{- end}}
-  {{- end}}
-  {{- if ($value.ignoreDifferences)}}
+  {{- if ($value.ignoreDifferences) }}
   ignoreDifferences:
-  {{- toYaml $value.ignoreDifferences | nindent 4}}
-  {{- end}}
----
+    {{- toYaml $value.ignoreDifferences | nindent 4 }}
+  {{- end }}
 {{- end }}
