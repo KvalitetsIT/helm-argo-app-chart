@@ -40,7 +40,6 @@ spec:
     path: {{ $value.path }}
     repoURL: {{ $value.repoUrl | default $repoUrl }}
     targetRevision: {{ $value.targetRevision }}
-  {{- if or ($value.sync) ($value.createNamespace) }}
   syncPolicy:
     {{- if ($value.sync.auto) }}
     automated:
@@ -51,7 +50,6 @@ spec:
       - FailOnSharedResource={{ $value.failOnSharedResource | default true }}
       - CreateNamespace={{ $value.createNamespace | default false }}
       - ServerSideApply={{ $value.serverSideApply | default false }}
-  {{- end }}
   {{- if ($value.ignoreDifferences) }}
   ignoreDifferences:
     {{- toYaml $value.ignoreDifferences | nindent 4 }}
