@@ -43,8 +43,8 @@ spec:
   syncPolicy:
     {{- if ($value.sync.auto) }}
     automated:
-      prune: {{ $value.sync.prune | default true }}
-      selfHeal: {{ $value.sync.selfHeal | default true }}
+      prune: {{ ternary (get $value.sync "prune") true (hasKey $value.sync "prune") }}
+      selfHeal: {{ ternary (get $value.sync "selfHeal") true (hasKey $value.sync "selfHeal") }}
     {{- end }}
     syncOptions:
       - FailOnSharedResource={{ $value.failOnSharedResource | default true }}
