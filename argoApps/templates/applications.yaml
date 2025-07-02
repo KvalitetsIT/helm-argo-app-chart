@@ -49,6 +49,7 @@ spec:
   {{- end}}
   {{- if or ($value.createNamespace) ($value.serverSideApply) }}
     syncOptions:
+      - FailOnSharedResource={{ $value.failOnSharedResource | default true}}
   {{- end }}
   {{- if $value.createNamespace }}
       - CreateNamespace=true
