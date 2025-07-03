@@ -41,7 +41,7 @@ spec:
     repoURL: {{ $value.repoUrl | default $repoUrl }}
     targetRevision: {{ $value.targetRevision }}
   syncPolicy:
-    {{- if ($value.sync.auto) }}
+    {{- if and $value.sync (hasKey $value.sync "auto") (get $value.sync "auto") }}
     automated:
       prune: {{ ternary (get $value.sync "prune") true (hasKey $value.sync "prune") }}
       selfHeal: {{ ternary (get $value.sync "selfHeal") true (hasKey $value.sync "selfHeal") }}

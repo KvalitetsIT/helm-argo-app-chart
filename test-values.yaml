@@ -1,0 +1,39 @@
+server: https://kubernetes.default.svc
+repoUrl: NovaxSoftware@vs-ssh.visualstudio.com:v3/NovaxSoftware/Service%20Hub/servicehub-k8s-novax
+
+namespaceArgo: infrastructure
+namespace: infrastructure
+project: infrastructure
+
+projects:
+  infrastructure:
+    description: Novax Infrastructure
+    sources:
+      - NovaxSoftware@vs-ssh.visualstudio.com:v3/NovaxSoftware/Service%20Hub/servicehub-k8s-novax
+      - NovaxSoftware@vs-ssh.visualstudio.com:v3/NovaxSoftware/Service%20Hub/projects-repository
+
+    orphanedResources:
+      disable: true
+applications:
+  
+  simplest-app:
+    path: deployment/apps/infrastructure
+    targetRevision: prod
+    namespace: infrastructure
+
+  with-value-files:
+    path: deployment/apps/infrastructure
+    targetRevision: prod
+    valueFiles:
+      - values.yaml
+      - values-test.yaml
+    namespace: infrastructure
+  
+  with-auto-sync:
+    path: deployment/apps/infrastructure
+    targetRevision: prod
+    namespace: infrastructure
+    sync:
+      auto: true
+      prune: true
+      selfHeal: true
