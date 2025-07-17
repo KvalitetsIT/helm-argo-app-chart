@@ -24,6 +24,15 @@ spec:
       name: {{ $destvalue.name }}
       {{- end }}
   {{- end }}
+  {{- range $destname, $destvalue := $value.extraDestinations }}
+    - namespace:   {{ $destvalue.namespace }}
+      {{- if ($destvalue.server) }}
+      server:  {{ $destvalue.server }}
+      {{- end }}
+      {{- if ($destvalue.name) }}
+      name: {{ $destvalue.name }}
+      {{- end }}
+  {{- end }}
 
   {{- if ($value.clusterResourceWhitelist) }}
   clusterResourceWhitelist:
