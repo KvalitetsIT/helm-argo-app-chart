@@ -15,8 +15,8 @@ spec:
     - {{ $source }}
     {{- end }}
   destinations:
-  {{- range $destnamespace, $destvalue := $value.destinations }}
-    - namespace: {{ $destnamespace }}
+  {{- range $destname, $destvalue := $value.destinations }}
+    - namespace:   {{ $destvalue.namespace }}
       {{- if ($destvalue.server) }}
       server:  {{ $destvalue.server }}
       {{- end }}
