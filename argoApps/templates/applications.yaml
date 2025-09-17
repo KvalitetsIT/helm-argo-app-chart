@@ -9,12 +9,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ $value.name | default $name   }}
-  namespace: {{ if $appsInArgoNamespace }}{{ $namespaceArgo }}{{ else }}{{ $value.namespace | default $namespace }}{{ end  }}
+  name: {{ $value.name | default $name  }}
+  namespace: {{ if $appsInArgoNamespace }}{{ $namespaceArgo }}{{ else }}{{ $value.namespace | default $namespace }}{{ end }}
   finalizers:
     # The default behaviour is foreground cascading deletion
     - resources-finalizer.argocd.argoproj.io
-  annotations:
+  annotations: 
     {{- with $value.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
