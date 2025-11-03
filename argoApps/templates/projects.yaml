@@ -16,7 +16,7 @@ spec:
     {{- end }}
   destinations:
   {{- range $destname, $destvalue := $value.destinations }}
-    - namespace:   {{ $destvalue.namespace }}
+    - namespace:   {{ $destvalue.namespace | quote }}
       {{- if ($destvalue.server) }}
       server:  {{ $destvalue.server }}
       {{- end }}
@@ -25,7 +25,7 @@ spec:
       {{- end }}
   {{- end }}
   {{- range $destname, $destvalue := $value.extraDestinations }}
-    - namespace:   {{ $destvalue.namespace }}
+    - namespace:   {{ $destvalue.namespace | quote }}
       {{- if ($destvalue.server) }}
       server:  {{ $destvalue.server }}
       {{- end }}
