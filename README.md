@@ -29,7 +29,7 @@ To illustrate properties inside objects in lists, an `[]` is added to show that 
 ### Common
 Theese properties are both used in projects and applications - And should always be filed
 
-| Value                                 | Description                                         | Valuetype         |  
+| Value                                 | Description                                         | Valuetype         |
 | -----                                 | -----------                                         | -----------       |
 | `server`                              | server for allowed destinations                     | `<string>`        |
 | `namespaceArgo`                       | What namespace to create the entities               | `<string>`        |
@@ -61,7 +61,7 @@ Theese properties are both used in projects and applications - And should always
 
 ### Argo applications
 
-| Value                                 | Description                                                             | Valuetype         |  
+| Value                                 | Description                                                             | Valuetype         |
 | -----                                 | -----------                                                             | -----------       |
 | `repoUrl`                             | Gitrepo the application should be created from                          | `<git-repo-url>`  |
 | `namespace`                           | Default namespace for destination                                       | `<string>`        |
@@ -69,6 +69,7 @@ Theese properties are both used in projects and applications - And should always
 | `applications`                        | List containing applications to create                                  | `<list<obj>>`     |
 | `applications[].namespace`            | Namespace for destination                                               | `<string>`        |
 | `applications[].valueFiles`           | List with values-files to use for application                           | `<string>`        |
+| `applications[].kustomize`            | If set to `true` or an object, the application is deployed as a Kustomize app. If an object is provided, it will be used as Kustomize options. | `<bool>` or `<obj>` |
 | `applications[].path`                 | path from root to application-folder                                    | `<string>`        |
 | `applications[].targetRevision`       | What branch should be used                                              | `<string>`        |
 | `applications[].sync`                 | If `true` an `automated` syncPolicy is added - Argo will sync automatically | `<bool>`        |
