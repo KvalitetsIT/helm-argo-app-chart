@@ -28,12 +28,16 @@ spec:
     {{- end }}
   project: {{ $value.project | default $project }}
   source:
-    {{- if not $value.valueFiles }}
+    {{- if kindIs "map" $value.kustomize }}
+    kustomize:
+      {{- toYaml $value.kustomize | nindent 6 }}
+    {{- else if eq $value.kustomize true }}
+    kustomize: {}
+    {{- else if not $value.valueFiles }}
     directory:
       recurse: true
       jsonnet: {}
-    {{- end }}
-    {{- if $value.valueFiles }}
+    {{- else }}
     helm:
       valueFiles:
         {{- range $file := $value.valueFiles }}

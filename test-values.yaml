@@ -15,7 +15,7 @@ projects:
     orphanedResources:
       disable: true
 applications:
-  
+
   simplest-app:
     path: deployment/apps/infrastructure
     targetRevision: prod
@@ -28,7 +28,7 @@ applications:
       - values.yaml
       - values-test.yaml
     namespace: infrastructure
-  
+
   with-auto-sync:
     path: deployment/apps/infrastructure
     targetRevision: prod
@@ -37,3 +37,18 @@ applications:
       auto: true
       prune: true
       selfHeal: true
+
+  kustomize-with-options:
+    path: deployment/apps/kustomize-app
+    targetRevision: prod
+    kustomize:
+      namePrefix: kustomize-
+      commonLabels:
+        app.kubernetes.io/
+    namespace: infrastructure
+
+  kustomize-without-options:
+    path: deployment/apps/kustomize-app
+    targetRevision: prod
+    kustomize: true
+    namespace: infrastructure
