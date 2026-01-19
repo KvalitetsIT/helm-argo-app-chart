@@ -30,8 +30,7 @@ spec:
   {{- if $value.sources }}
   sources:
     {{ $value.sources | toYaml | nindent 4}}
-  {{- end }}
-  {{- if $value.source }}
+  {{- else }}
   source:
     {{- if not $value.valueFiles }}
     directory:
