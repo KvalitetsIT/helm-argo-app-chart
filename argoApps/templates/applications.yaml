@@ -27,6 +27,11 @@ spec:
     name: {{ $value.destName }}
     {{- end }}
   project: {{ $value.project | default $project }}
+  {{- if $value.sources }}
+  sources:
+    {{ $value.sources | toYaml}}
+  {{- end }}
+  {{- if $value.source }}
   source:
     {{- if not $value.valueFiles }}
     directory:
@@ -43,6 +48,7 @@ spec:
     path: {{ $value.path }}
     repoURL: {{ $value.repoUrl | default $repoUrl }}
     targetRevision: {{ $value.targetRevision }}
+  {{- end }}
   syncPolicy:
     {{- if and $value.sync (hasKey $value.sync "auto") (get $value.sync "auto") }}
     automated:
