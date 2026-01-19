@@ -29,7 +29,7 @@ spec:
   project: {{ $value.project | default $project }}
   {{- if $value.sources }}
   sources:
-    {{ $value.sources | toYaml}}
+    {{ $value.sources | toYaml | nindent 4}}
   {{- end }}
   {{- if $value.source }}
   source:
