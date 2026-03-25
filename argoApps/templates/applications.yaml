@@ -58,6 +58,9 @@ spec:
       - FailOnSharedResource={{ $value.failOnSharedResource | default true }}
       - CreateNamespace={{ $value.createNamespace | default false }}
       - ServerSideApply={{ $value.serverSideApply | default false }}
+      {{- if $value.prunePropagationPolicy }}
+      - PrunePropagationPolicy={{ $value.prunePropagationPolicy }}
+      {{- end }}
   {{- if ($value.ignoreDifferences) }}
   ignoreDifferences:
     {{- toYaml $value.ignoreDifferences | nindent 4 }}
