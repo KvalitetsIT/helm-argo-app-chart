@@ -37,3 +37,11 @@ applications:
       auto: true
       prune: true
       selfHeal: true
+
+  with-background-prune:
+    path: deployment/apps/infrastructure
+    targetRevision: prod
+    namespace: infrastructure
+    sync:
+      auto: true
+    prunePropagationPolicy: background

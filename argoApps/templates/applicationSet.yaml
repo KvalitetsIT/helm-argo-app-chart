@@ -53,7 +53,7 @@ spec:
           prune: {{ $value.sync.prune | default true}}
           selfHeal: {{ $value.sync.selfHeal | default true}}
       {{- end}}
-      {{- if or ($value.createNamespace) ($value.serverSideApply) }}
+      {{- if or ($value.createNamespace) ($value.serverSideApply) ($value.prunePropagationPolicy) }}
         syncOptions:
       {{- end }}
       {{- if $value.createNamespace }}
@@ -61,6 +61,9 @@ spec:
       {{- end}}
       {{- if $value.serverSideApply }}
           - ServerSideApply=true
+      {{- end}}
+      {{- if $value.prunePropagationPolicy }}
+          - PrunePropagationPolicy={{ $value.prunePropagationPolicy }}
       {{- end}}
       {{- end}}
       {{- if ($value.ignoreDifferences)}}
